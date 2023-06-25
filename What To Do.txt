@@ -16,3 +16,48 @@ The application is a to-do list manager that utilizes Node.js for the backend se
 * Frontend: 20%
 * Backend: 70%
 * Postman Collector: 10%
+
+
+Project Setup
+
+Set up a new Node.js project.
+Install the necessary dependencies such as Express.js, MySQL/PostgreSQL driver, and other required libraries.
+Database Setup
+
+Set up a MySQL/PostgreSQL database.
+Create a table to store user information, including email, password, and a unique user ID.
+Create a table to store tasks, including task ID, user ID (foreign key), task description, status, etc.
+User Authentication
+
+Implement a user registration endpoint to create a new user in the database.
+Implement a user login endpoint to authenticate the user based on email and password.
+Generate a JSON Web Token (JWT) upon successful login, which will be used for authentication in subsequent requests.
+Token Validation
+
+Create a middleware function to validate the JWT sent in the request headers.
+Implement this middleware for the endpoints that require authentication.
+Task Management
+
+Implement endpoints for creating, updating, deleting, and marking tasks as complete.
+These endpoints will interact with the database to perform the necessary CRUD operations.
+Ensure that these endpoints are protected and require authentication.
+Frontend Development
+
+Create HTML templates for user registration, login, and the main to-do list page.
+Use CSS for styling the frontend components.
+Implement JavaScript logic to interact with the backend API endpoints using fetch or Axios.
+Design Pattern
+
+Implement a suitable design pattern, such as Model-View-Controller (MVC), to separate concerns and improve code organization.
+Postman Collection
+
+Create a Postman collection to document and test the API endpoints.
+Include requests for user registration, login, task management, and token validation.
+Manual Query Execution
+
+Instead of using an ORM library, manually write and execute SQL queries for database operations like inserting, updating, deleting, etc.
+Testing and Refinement
+
+Test the application thoroughly, including both frontend and backend functionalities.
+Identify and fix any bugs or issues.
+Refine the application based on user feedback or additional requirements.
