@@ -42,6 +42,7 @@ db.connect( (error) => {
 // Setting Up Routes
 app.use('/' , require('./routes/pages'));
 app.use('/auth', require('./routes/auth'));
+app.use('/logins', require('./routes/logins'));
 
 app.listen(5001, () => {
 

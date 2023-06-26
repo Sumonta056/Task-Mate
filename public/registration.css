@@ -274,8 +274,9 @@ h4{
 	transform: translateY(30px);
 	opacity: 0;
 	visibility: hidden;
-	animation: fade-in 4s linear forwards;
-  }
+	animation: fade-in 10s linear forwards;
+	-webkit-animation: fade-in 6s linear forwards;
+}
   
   .notification__progress {
 	position: absolute;
@@ -288,7 +289,7 @@ h4{
 	background-image: linear-gradient(to right, #1f1d1d, #290202);
 	border-radius: inherit;
 	animation: load 10s 0.25s linear forwards;
-	-webkit-animation: load 10s 0.25s linear forwards;
+	-webkit-animation: load 6s 0.25s linear forwards;
 }
   
   @keyframes fade-in {

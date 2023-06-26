@@ -198,13 +198,14 @@ h3 {
 	padding: 20px 15px;
 	border-radius: 4px;
 	background: linear-gradient(90deg, #62cfcf 0%, #dfcec9 80%);
-	color: #232324;
+	color: #282729;
 	box-shadow: 0 1px 10px rgba(0, 0, 0, 0.658);
 	transform: translateY(30px);
 	opacity: 0;
 	visibility: hidden;
-	animation: fade-in 4s linear forwards;
-  }
+	animation: fade-in 10s linear forwards;
+	-webkit-animation: fade-in 6s linear forwards;
+}
   
   .notification__progress {
 	position: absolute;
@@ -214,10 +215,10 @@ h3 {
 	height: 3px;
 	transform: scaleX(0);
 	transform-origin: left;
-	background-image: linear-gradient(to right, #161515, #1f1c1c);
+	background-image: linear-gradient(to right, #1f1d1d, #290202);
 	border-radius: inherit;
-	animation: load 12s 0.25s linear forwards;
-	-webkit-animation: load 12s 0.25s linear forwards;
+	animation: load 10s 0.25s linear forwards;
+	-webkit-animation: load 6s 0.25s linear forwards;
 }
   
   @keyframes fade-in {
