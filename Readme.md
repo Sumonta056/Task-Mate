@@ -20,3 +20,7 @@
 ```code
      npm start
 ```
+
+ npm i bcryptjs
+
+ $ npm i cookie-parser jsonwebtoken

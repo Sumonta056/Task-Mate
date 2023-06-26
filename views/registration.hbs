@@ -59,13 +59,23 @@
                     </div>
                     <div class="div">
                         <h5>Re-Password</h5>
-                        <input type="password" class="input" id = "repassword" name = "repass">
+                        <input type="password" class="input" id = "repass" name = "repass">
                     </div>
                 </div>
 
                 <input type="submit" class="btn" value="Registration">
             </form>
+
+            
         </div>
+
+        {{#if message }}
+        <div class="notification">
+                <p>{{message}}</p>
+                <span class="notification__progress"></span>
+            </div>
+        {{/if}}
+
     </div>
     <script type="text/javascript" src="/main.js"></script>
 </body>
