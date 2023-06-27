@@ -8,10 +8,14 @@
 	<link href="https://fonts.googleapis.com/css?family=Poppins:600&display=swap" rel="stylesheet">
 	<script src="https://kit.fontawesome.com/a81368914c.js"></script>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
 </head>
 
 <body>
-     <img class="wave" src="/wave.png">
+	<img class="wave" src="/wave.png">
 	<div class="header">
 		<h1>Task-Mate</h1>
 		<h5>Stay organized and boost productivity with my intuitive To-Do List app.</h5>
@@ -21,7 +25,7 @@
 			<img src="/bg.svg">
 		</div>
 		<div class="login-content">
-			<form onsubmit="return false;" id = "form">
+			<form onsubmit="return false;" id="form">
 				<img src="/avatar.svg">
 				<h2 class="title">Welcome</h2>
 				<div class="input-div one">
@@ -30,7 +34,7 @@
 					</div>
 					<div class="div">
 						<h5>Email</h5>
-						<input type="text" class="input" id = "email" , name="email">
+						<input type="text" class="input" id="email" , name="email">
 					</div>
 				</div>
 				<div class="input-div pass">
@@ -39,15 +43,30 @@
 					</div>
 					<div class="div">
 						<h5>Password</h5>
-						<input type="password" class="input" id = "password" , name = "password">
+						<input type="password" class="input" id="password" , name="password">
 					</div>
 				</div>
 				<a href="/register">Create an account??</a>
 				<input type="submit" class="btn" value="Login">
+
+				<div class="alert alert-danger" role="alert" id="error" style="display: none;">
+
+				</div>
+
+				<div class="alert alert-success" role="alert" style="display: none;" id="success"
+					style="display: none;">
+
+
+				</div>
+
+				<div class="alert alert-warning" role="alert" id="home" style="display: none; cursor: pointer;"
+					onclick="window.location.href = '/index';">
+					Home Page
+				</div>
 			</form>
 		</div>
 
-		  <!-- {{#if message }}
+		<!-- {{#if message }}
         <div class="notification">
                 <p>{{message}}</p>
                 <span class="notification__progress"></span>

@@ -43,7 +43,7 @@ const login = async (req, res) => {
             }
 
             res.cookie("UserRegisterd",token,cookieOptions);
-            return res.json({status: "success", success: "User Has Been Logged In"});
+            return res.json({status: "success", success: "Login Successful"});
         }
       }
     );

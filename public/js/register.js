@@ -18,10 +18,12 @@ form.addEventListener("submit", () => {
       if (data.status == "error") {
         success.style.display = "none"
         error.style.display = "block"
+        home.style.display="none"
         error.innerText = data.error
       } else {
         success.style.display = "block"
         error.style.display = "none"
+        home.style.display="block"
         success.innerText = data.success
       }
     });

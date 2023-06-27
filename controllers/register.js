@@ -38,8 +38,6 @@ const register = async (req, res) => {
                   status: "success",
                   success: "Registration Successful",
                 });
-
-                return
               }
             }
           );

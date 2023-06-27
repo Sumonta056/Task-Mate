@@ -68,25 +68,35 @@
 
                 <input type="submit" class="btn" value="Registration">
 
-                <div class="alert alert-danger" role="alert" id="error" style ="display: none;">
+                <div class="alert alert-danger" role="alert" id="error" style="display: none;">
 
                 </div>
 
-                <div class="alert alert-success" role="alert" id="success" style ="display: none;">
+                <div class="alert alert-success" role="alert"  style="display: none;" id="success" style="display: none;">
+
 
                 </div>
+
+                <div class="alert alert-warning" role="alert" id = "home" style="display: none; cursor: pointer;" onclick="window.location.href = '/index';">
+                    Home Page
+                </div>
+
+
             </form>
+
+
+
 
 
 
         </div>
 
         <!-- {{#if message }}
-        <div class="notification">
-                <p>{{message}}</p>
-                <span class="notification__progress"></span>
-            </div>
-        {{/if}} -->
+        <div class=" notification">
+                    <p>{{message}}</p>
+                    <span class="notification__progress"></span>
+                </div>
+                {{/if}} -->
 
     </div>
     <script src="/js/register.js"></script>
