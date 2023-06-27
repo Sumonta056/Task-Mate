@@ -1,42 +1,53 @@
-const mysql = require("mysql");
 const jwt = require("jsonwebtoken");
+const db = require("../routes/db-config");
+const bcrypt = require("bcryptjs");
 
+const login = async (req, res) => {
+  console.log(req.body);
 
-require('dotenv').config();
-const db = mysql.createConnection({
+  const { email, password } = req.body;
 
-    // encryption using DOT ENV
-    host: process.env.DATABASE_HOST,
-    user: process.env.DATABASE_USER,
-    password: process.env.DATABASE_PASSWORD,
-    database: process.env.DATABASE_NAME,
-   
-});
-
-
-
-exports.login = (req,res) => {
-
-    console.log(req.body);
-
-    const email = req.body.email;
-    const password = req.body.password;
-
-    db.query(`SELECT * from users where email = ? and password = ?`, [email, password],function(error,results,fields) {
-
-
-        if(results.length > 0) {
-            return res.render('index' , {
-                message : 'Login Successful'
-            })
-        }else {
-            return res.render('login' , {
-                message : 'Login Failed'
-            })
+  if (!email || !password)
+    return res.json({
+      status: "error",
+      error: "Please Enter your email address and password ",
+    });
+  else {
+    db.query(
+      "SELECT * FROM users WHERE email = ?",
+      [email],
+      async (error, result) => {
+        if (error) {
+          throw error;
         }
-    })
 
+        if (
+          !result.length||
+          !(await bcrypt.compare(password, result[0].password))
+        ) {
+          return res.json({
+            status: "error",
+            error: "Invalid password and Email address",
+          });
+        }
 
-    // res.send("Form Submitted");
+        else {
 
-}
+            const token = jwt.sign({id : result[0].id} , process.env.JWT_SECRET , {
+                expiresIn: process.env.JWT_EXPIRES,
+            })
+
+            const cookieOptions = {
+                expiresIn : new Date(Date.now() + process.env.COOKIE_EXPIRES *24*3600*1000),
+                httpOnly: true
+            }
+
+            res.cookie("UserRegisterd",token,cookieOptions);
+            return res.json({status: "success", success: "User Has Been Logged In"});
+        }
+      }
+    );
+  }
+};
+
+module.exports = login;

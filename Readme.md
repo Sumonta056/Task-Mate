@@ -21,6 +21,7 @@
      npm start
 ```
 
- npm i bcryptjs
-
- $ npm i cookie-parser jsonwebtoken
+- **Setting Up Token and Cookie**
+```code
+     npm i cookie-parser jsonwebtoken
+```

@@ -1,51 +1,90 @@
 const express = require("express");
-const mysql = require("mysql");
 const app = express();
+const cookie = require("cookie-parser");
 const path = require("path");
+const PORT = 5001;
+const db = require("./routes/db-config");
 
+app.use("/js" ,express.static(__dirname + "/public/js"));
+app.use("/css" ,express.static(__dirname + "/public/css"));
 
-require('dotenv').config();
-// Creating SQL Connection
-const db = mysql.createConnection({
-
-    // encryption using DOT ENV
-    host: process.env.DATABASE_HOST,
-    user: process.env.DATABASE_USER,
-    password: process.env.DATABASE_PASSWORD,
-    database: process.env.DATABASE_NAME,
-   
-});
-
-// Setting public directory for storing CSS , JS of Frontend
 const publicDirectory = path.join(__dirname, './public');
 app.use(express.static(publicDirectory));
 app.set('views', path.join(__dirname, 'views'));
 
-// Parse URL encoded Bodies (as sent by HTML forms)
-app.use(express.urlencoded({ extended:false }));
+app.set('view engine', 'ejs');
+app.set("views", "./views");
+app.use(cookie());
 app.use(express.json());
 
-// Setting Views for storing HTML files
-app.set('view engine', 'hbs');
 
-// checking connections
-db.connect( (error) => {
+db.connect((err) => {
 
-    if (error) {
-        console.log(error);
-    }else {
-        console.log("Connected to taskmate");
-    }
+    if (err) throw err;
+    console.log("Database Connected");
 })
 
 
-// Setting Up Routes
 app.use('/' , require('./routes/pages'));
-app.use('/auth', require('./routes/auth'));
-app.use('/logins', require('./routes/logins'));
+app.use('/api' , require("./controllers/auth"));
 
-app.listen(5001, () => {
+app.listen(PORT);
 
-    console.log("Server started on Port 5001");
 
-});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// const express = require("express");
+// const app = express();
+// const cookie = require("cookie-parser");
+
+
+
+// const db = require("./routes/db-config");
+
+
+// app.set('view engine', 'ejs');
+// app.set('views', './views');
+// app.use(cookie());
+// app.use(express.urlencoded({ extended:false }));
+// app.use(express.json());  // Parse URL encoded Bodies (as sent by HTML forms)
+
+// // checking connections
+// db.connect( (error) => {
+
+//     if (error) {
+//         console.log(error);
+//     }else {
+//         console.log("Connected to taskmate");
+//     }
+// })
+
+
+// // Setting Up Routes
+// app.use('/' , require('./routes/pages'));
+// app.use("/api" , require('./controllers/auth'));
+
+
+
+// // Listern to Port
+// app.listen(5001, () => {
+
+//     console.log("Server started on Port 5001");
+
+// });
