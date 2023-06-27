@@ -34,7 +34,7 @@ const login = async (req, res) => {
         else {
 
             const token = jwt.sign({id : result[0].id} , process.env.JWT_SECRET , {
-                expiresIn: process.env.JWT_EXPIRES,
+                expiresIn: process.env.JWT_EXPIRES
             })
 
             const cookieOptions = {
@@ -42,7 +42,7 @@ const login = async (req, res) => {
                 httpOnly: true
             }
 
-            res.cookie("UserRegisterd",token,cookieOptions);
+            res.cookie("userRegistered", token, cookieOptions);
             return res.json({status: "success", success: "Login Successful"});
         }
       }
