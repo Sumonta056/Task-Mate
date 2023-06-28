@@ -62,6 +62,26 @@ app.post("/add_data", (request, response) => {
 
 });
 
+//Create Route for Update Data Operation
+app.post('/update_data', (request, response) => {
+
+	const variable_name = request.body.variable_name;
+
+	const variable_value = request.body.variable_value;
+
+	const id = request.body.id;
+
+	const sql = `UPDATE sample_data SET `+variable_name+`= "${variable_value}" WHERE id = "${id}"`;
+
+	db.query(sql, (error, results) => {
+
+		response.json({
+			message : 'Data Updated'
+		});
+
+	});
+
+});
 
 
 app.listen(PORT);
