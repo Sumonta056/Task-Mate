@@ -21,36 +21,30 @@ app.use(express.json());
 app.use("/", require("./routes/pages"));
 app.use("/api", require("./controllers/auth"));
 
-// Add middleware for parse incoming request body
+// Add middleware to parse incoming request bodies
 app.use(bodyParser.urlencoded({ extended: false }));
-
-// Add middleware for parse incoming data in JSON
+// Add middleware to parse incoming JSON data
 app.use(bodyParser.json());
 
-//Crate Route handle get request
+// Create route handle for GET request to fetch data
 app.get("/get_data", (request, response) => {
-  const sql = `SELECT * FROM sample_data ORDER BY id ASC`;
-
+  const sql = "SELECT * FROM tasks ORDER BY id ASC";
   db.query(sql, (error, results) => {
     console.log(error);
     response.send(results);
   });
 });
 
-//Create Route for Insert Data Operation
+// Create route handle for POST request to add data
 app.post("/add_data", (request, response) => {
-  const first_name = request.body.first_name;
-
-  const last_name = request.body.last_name;
-
-  const age = request.body.age;
-
+  const task_name = request.body.task_name;
+  const task_description = request.body.task_description;
+  const task_priority = request.body.task_priority;
   const sql = `
-	INSERT INTO sample_data 
-	(first_name, last_name, age) 
-	VALUES ("${first_name}", "${last_name}", "${age}")
-	`;
-
+    INSERT INTO tasks
+    (task_name, task_description, task_priority)
+    VALUES ("${task_name}", "${task_description}", "${task_priority}")
+    `;
   db.query(sql, (error, results) => {
     response.json({
       message: "Data Added",
@@ -58,19 +52,12 @@ app.post("/add_data", (request, response) => {
   });
 });
 
-//Create Route for Update Data Operation
+// Create route handle for POST request to update data
 app.post("/update_data", (request, response) => {
   const variable_name = request.body.variable_name;
-
   const variable_value = request.body.variable_value;
-
   const id = request.body.id;
-
-  const sql =
-    `UPDATE sample_data SET ` +
-    variable_name +
-    `= "${variable_value}" WHERE id = "${id}"`;
-
+  const sql = `UPDATE tasks SET ${variable_name} = "${variable_value}" WHERE id = "${id}"`;
   db.query(sql, (error, results) => {
     response.json({
       message: "Data Updated",
@@ -78,12 +65,10 @@ app.post("/update_data", (request, response) => {
   });
 });
 
-//Create Route for Delete data operation
+// Create route handle for POST request to delete data
 app.post("/delete_data", (request, response) => {
   const id = request.body.id;
-
-  const sql = `DELETE FROM sample_data WHERE id = '${id}'`;
-
+  const sql = `DELETE FROM tasks WHERE id = '${id}'`;
   db.query(sql, (error, results) => {
     response.json({
       message: "Data Deleted",
@@ -91,4 +76,6 @@ app.post("/delete_data", (request, response) => {
   });
 });
 
-app.listen(PORT);
+app.listen(PORT, () => {
+  console.log("Everything Running Good");
+});
