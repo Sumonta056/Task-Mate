@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const cookie = require("cookie-parser");
+const bodyParser = require('body-parser');
 const path = require("path");
 const PORT = 5001;
 const db = require("./routes/db-config");
@@ -18,73 +19,50 @@ app.use(cookie());
 app.use(express.json());
 
 
-db.connect((err) => {
-
-    if (err) throw err;
-    console.log("Database Connected");
-})
-
-
 app.use('/' , require('./routes/pages'));
 app.use('/api' , require("./controllers/auth"));
 
+// Add middleware for parse incoming request body
+app.use(bodyParser.urlencoded({ extended : false }));
+
+// Add middleware for parse incoming data in JSON
+app.use(bodyParser.json());
+
+//Crate Route handle get request
+app.get("/get_data", (request, response) => {
+	const sql = `SELECT * FROM sample_data ORDER BY id ASC`;
+
+	db.query(sql, (error, results) => {
+		console.log(error);
+		response.send(results);
+
+	});
+});
+
+//Create Route for Insert Data Operation
+app.post("/add_data", (request, response) => {
+
+	const first_name = request.body.first_name;
+
+	const last_name = request.body.last_name;
+
+	const age = request.body.age;
+
+	const sql = `
+	INSERT INTO sample_data 
+	(first_name, last_name, age) 
+	VALUES ("${first_name}", "${last_name}", "${age}")
+	`;
+
+	db.query(sql, (error, results) => {
+		response.json({
+			message : 'Data Added'
+		});
+	});
+
+});
+
+
+
 app.listen(PORT);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// const express = require("express");
-// const app = express();
-// const cookie = require("cookie-parser");
-
-
-
-// const db = require("./routes/db-config");
-
-
-// app.set('view engine', 'ejs');
-// app.set('views', './views');
-// app.use(cookie());
-// app.use(express.urlencoded({ extended:false }));
-// app.use(express.json());  // Parse URL encoded Bodies (as sent by HTML forms)
-
-// // checking connections
-// db.connect( (error) => {
-
-//     if (error) {
-//         console.log(error);
-//     }else {
-//         console.log("Connected to taskmate");
-//     }
-// })
-
-
-// // Setting Up Routes
-// app.use('/' , require('./routes/pages'));
-// app.use("/api" , require('./controllers/auth'));
-
-
-
-// // Listern to Port
-// app.listen(5001, () => {
-
-//     console.log("Server started on Port 5001");
-
-// });

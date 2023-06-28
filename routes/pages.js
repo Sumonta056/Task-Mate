@@ -27,7 +27,6 @@ router.get("/login", (req, res) => {
   res.sendFile("login.html", { root: "./public" });
 });
 
-
-router.get("/logout",logout);
+router.get("/logout", logout);
 
 module.exports = router;
