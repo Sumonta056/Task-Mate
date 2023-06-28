@@ -25,30 +25,42 @@
       </ul>
     </div>
 
-    <div class="welcome-text">
-      <h1>
-        <span>Task-Mate</span>
-      </h1>
-      <h2>
-        <span>Stay organized and boost productivity with my intuitive To-Do
-          List app.</span>
-      </h2>
 
 
-      <% if (status==="loggedIn" ) { %>
+    <% if (status==="loggedIn" ) { %>
+
+      <div class="welcome-text">
+        <h1>
+          <span>Task-Mate</span>
+        </h1>
+        <h2>
+          <span> Hello, <span class="username">
+              <%= user.name %>
+            </span>! Boost Your Productivity with Task-Mate </span>
+        </h2>
+
         <a href="/login">Logout</a>
         <a href="/register">Profile</a>
-        <% } else { %>
+
+      </div>
+      <% } else { %>
+
+
+        <div class="welcome-text gg">
+          <h1>
+            <span>Task-Mate</span>
+          </h1>
+          <h2>
+            <span>Stay organized and boost productivity with my intuitive To-Do
+              List app.</span>
+          </h2>
+
           <a href="/login">Login</a>
           <a href="/register">Registration</a>
-          <% } %>
 
+        </div>
 
-
-
-
-
-    </div>
+        <% } %>
 
   </header>
 </body>

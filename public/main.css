@@ -59,7 +59,7 @@ header {
     position: absolute;
     width: 100%;
     height: 300px;
-    top:37%;
+    top:10%;
     text-align: center;
 }
 
@@ -91,9 +91,7 @@ h3 {
    
 }
 
- h3 span {
-    color: #a8db65;
-}
+
 
 .welcome-text h2 {
     text-align: center;
@@ -106,6 +104,10 @@ h3 {
     color: #9fa5a4;
 
     margin-bottom: 40px
+}
+
+.welcome-text h2 .username {
+    color: #a8db65;
 }
 
 .welcome-text a {
