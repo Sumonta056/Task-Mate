@@ -72,13 +72,22 @@ app.post("/update_data", (request, response) => {
   const variable_name = request.body.variable_name;
   const variable_value = request.body.variable_value;
   const id = request.body.id;
-  const sql = `UPDATE tasks SET ${variable_name} = "${variable_value}" WHERE id = "${id}"`;
-  db.query(sql, (error, results) => {
-    response.json({
-      message: "Your task has been updated successfully!",
-    });
+
+  console.log(request.body);
+
+  const sql = "UPDATE tasks SET ?? = ? WHERE id = ?";
+  const values = [variable_name, variable_value, id];
+
+  db.query(sql, values, (error, results) => {
+    if (error) {
+      console.error("Error updating data:", error);
+      response.status(500).json({ error: "An error occurred while updating the data" });
+    } else {
+      response.json({ message: "Your task has been updated successfully!" });
+    }
   });
 });
+
 
 // Create route handle for POST request to delete data
 app.post("/delete_data", (request, response) => {
