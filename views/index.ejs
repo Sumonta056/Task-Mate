@@ -1,12 +1,15 @@
 <html>
+
 <head>
   <title>Task-Mate</title>
   <link rel="icon" href="/icon.png" type="image/x-icon" />
   <meta charset="UTF-8" />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/main.css" />
-  <link href="https://getbootstrap.com/docs/5.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+  <link href="https://getbootstrap.com/docs/5.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 </head>
+
 <body>
   <header>
     <div class="wrapper">
@@ -19,13 +22,15 @@
         <li><a href="#">Contact</a></li>
       </ul>
     </div>
-    <% if (status === "loggedIn") { %>
+    <% if (status==="loggedIn" ) { %>
       <div class="welcome-text">
         <h1>
           <span>Task-Mate</span>
         </h1>
         <h2>
-          <span> Hello, <span class="username"><%= user.name %></span>! Boost Your Productivity with Task-Mate </span>
+          <span> Hello, <span class="username">
+              <%= user.name %>
+            </span>! Boost Your Productivity with Task-Mate </span>
         </h2>
         <a href="/logout">Logout</a>
         <a href="/register">Profile</a>
@@ -89,7 +94,8 @@
           const task_name = document.getElementById('task_name_data');
           const task_description = document.getElementById('task_description_data');
           const task_priority = document.getElementById('task_priority_data');
-          const param = `task_name=${task_name.innerText}&task_description=${task_description.innerText}&task_priority=${task_priority.innerText}`;
+          const userId = "<%= user.id %>"; // Get the user ID from the template
+          const param = `task_name=${task_name.innerText}&task_description=${task_description.innerText}&task_priority=${task_priority.innerText}&user_id=${userId}`; // Include user_id in the parameters
           const request = new XMLHttpRequest();
           request.open('POST', '/add_data', true);
           request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
@@ -101,6 +107,7 @@
           };
           request.send(param);
         }
+
         function update_data(element, variable_name, id) {
           const param = `variable_name=${variable_name}&variable_value=${element.innerText}&id=${id}`;
           const request = new XMLHttpRequest();
@@ -129,18 +136,19 @@
           }
         }
       </script>
-    <% } else { %>
-      <div class="welcome-text gg">
-        <h1>
-          <span>Task-Mate</span>
-        </h1>
-        <h2>
-          <span>Stay organized and boost productivity with my intuitive To-Do List app.</span>
-        </h2>
-        <a href="/login">Login</a>
-        <a href="/register">Registration</a>
-      </div>
-    <% } %>
+      <% } else { %>
+        <div class="welcome-text gg">
+          <h1>
+            <span>Task-Mate</span>
+          </h1>
+          <h2>
+            <span>Stay organized and boost productivity with my intuitive To-Do List app.</span>
+          </h2>
+          <a href="/login">Login</a>
+          <a href="/register">Registration</a>
+        </div>
+        <% } %>
   </header>
 </body>
+
 </html>

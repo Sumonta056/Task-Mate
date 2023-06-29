@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 const path = require("path");
 const PORT = 5001;
 const db = require("./routes/db-config");
+const { use } = require("./routes/pages");
 
 app.use("/js", express.static(__dirname + "/public/js"));
 app.use("/css", express.static(__dirname + "/public/css"));
@@ -40,15 +41,24 @@ app.post("/add_data", (request, response) => {
   const task_name = request.body.task_name;
   const task_description = request.body.task_description;
   const task_priority = request.body.task_priority;
+  const user_id = request.body.user_id;
+
+  console.log(user_id);
+
   const sql = `
     INSERT INTO tasks
-    (task_name, task_description, task_priority)
-    VALUES ("${task_name}", "${task_description}", "${task_priority}")
-    `;
+    (task_name, task_description, task_priority, user_id)
+    VALUES ("${task_name}", "${task_description}", "${task_priority}", "${user_id}")
+  `;
   db.query(sql, (error, results) => {
-    response.json({
-      message: "Data Added",
-    });
+    if (error) {
+      console.log(error);
+      response.status(500).json({ message: "Error adding task" });
+    } else {
+      response.json({
+        message: "Task added successfully. Keep up the good work!",
+      });
+    }
   });
 });
 
@@ -60,7 +70,7 @@ app.post("/update_data", (request, response) => {
   const sql = `UPDATE tasks SET ${variable_name} = "${variable_value}" WHERE id = "${id}"`;
   db.query(sql, (error, results) => {
     response.json({
-      message: "Data Updated",
+      message: "Your task has been updated successfully!",
     });
   });
 });
@@ -71,7 +81,7 @@ app.post("/delete_data", (request, response) => {
   const sql = `DELETE FROM tasks WHERE id = '${id}'`;
   db.query(sql, (error, results) => {
     response.json({
-      message: "Data Deleted",
+      message: "Task deleted successfully!",
     });
   });
 });
