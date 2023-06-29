@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 
 <head>
@@ -49,7 +50,7 @@
                 <table class="table table-light table-bordered table-hover align-middle mt-3">
                   <thead>
                     <tr>
-                      <!-- <th class="table-info">Task No</th> -->
+                      <th class="table-secondary text-center fs-6">Checkbox</th>
                       <th class="table-primary text-center fs-6">Task Name</th>
                       <th class="table-warning text-center fs-6">Task Description</th>
                       <th class="table-danger text-center fs-6">Priority</th>
@@ -78,29 +79,31 @@
               const results = JSON.parse(request.responseText);
               results.forEach(result => {
                 html += `
-      <tr>
-       
-        <td contenteditable class="text-center" onblur="update_data(this, 'task_name', '${result.id}')"
-          data-toggle="tooltip"  data-placement="top" title="Click to edit">${result.task_name}</td>
-        <td contenteditable  class="text-center" onblur="update_data(this, 'task_description', '${result.id}')"
-          data-toggle="tooltip" data-placement="top" title="Click to edit">${result.task_description}</td>
-        <td contenteditable  class="text-center" onblur="update_data(this, 'task_priority', '${result.id}')"
-          data-toggle="tooltip" data-placement="top" title="Click to edit">${result.task_priority}</td>
-        <td class="d-grid gap-2"><button type="button" class="btn btn-danger btn-sm" onclick="delete_data(${result.id})">Remove</button></td>
-      </tr>`;
+        <tr>
+          <td class="text-center"><input type="checkbox" onchange="strikeThroughRow(this)"></td>
+          <td contenteditable class="text-center" onblur="update_data(this, 'task_name', '${result.id}')"
+            data-toggle="tooltip"  data-placement="top" title="Click to edit">${result.task_name}</td>
+          <td contenteditable  class="text-center" onblur="update_data(this, 'task_description', '${result.id}')"
+            data-toggle="tooltip" data-placement="top" title="Click to edit">${result.task_description}</td>
+          <td contenteditable  class="text-center" onblur="update_data(this, 'task_priority', '${result.id}')"
+            data-toggle="tooltip" data-placement="top" title="Click to edit">${result.task_priority}</td>
+          <td class="d-grid gap-2"><button type="button" class="btn btn-danger btn-sm" onclick="delete_data(${result.id})">Remove</button></td>
+        </tr>`;
               });
               html += `
-        <tr>
-          <td contenteditable id="task_name_data" data-toggle="tooltip" data-placement="top" title="Enter task name"></td>
-          <td contenteditable id="task_description_data" data-toggle="tooltip" data-placement="top" title="Enter task description"></td>
-          <td contenteditable id="task_priority_data" data-toggle="tooltip" data-placement="top" title="Set task priority"></td>
-          <td class="d-grid gap-2"><button type="button" class="btn btn-success btn-sm" onclick="add_data()">Add</button></td>
-        </tr>`;
+      <tr>
+        <td></td>
+        <td contenteditable id="task_name_data" data-toggle="tooltip" data-placement="top" title="Enter task name"></td>
+        <td contenteditable id="task_description_data" data-toggle="tooltip" data-placement="top" title="Enter task description"></td>
+        <td contenteditable id="task_priority_data" data-toggle="tooltip" data-placement="top" title="Set task priority"></td>
+        <td class="d-grid gap-2"><button type="button" class="btn btn-success btn-sm" onclick="add_data()">Add</button></td>
+      </tr>`;
               results_body.innerHTML = html;
             }
           };
           request.send();
         }
+
         function add_data() {
           const task_name = document.getElementById('task_name_data');
           const task_description = document.getElementById('task_description_data');
@@ -145,6 +148,18 @@
               }
             };
             request.send(param);
+          }
+        }
+
+        function strikeThroughRow(checkbox) {
+          const row = checkbox.parentNode.parentNode;
+          const buttons = row.getElementsByTagName('button');
+          for (let i = 0; i < buttons.length; i++) {
+            buttons[i].classList.toggle('strikethrough');
+          }
+
+          if (checkbox.checked) {
+            alert('Congratulations on completing the task!');
           }
         }
       </script>

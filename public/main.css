@@ -243,3 +243,19 @@ h3 {
     transform: scaleX(1);
   }
 }
+
+@keyframes slideDown {
+  0% {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+
+.btn.strikethrough {
+  text-decoration: none !important;
+}
