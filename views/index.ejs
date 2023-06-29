@@ -8,6 +8,13 @@
   <link rel="stylesheet" href="/main.css" />
   <link href="https://getbootstrap.com/docs/5.1/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+  <script src="https://unpkg.com/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+    integrity="sha384-TjQzSk8aVf4HWEdkKQ3rEj0ccfxSiSeB9qoVDtwL0TYR2jxHChnHtIv1Adzj+uKT"
+    crossorigin="anonymous"></script>
+  <script src="https://getbootstrap.com/docs/5.1/dist/js/bootstrap.min.js"
+    integrity="sha384-4eS1FNSkTrB/fM9mzgPwpgqoqbpvfRMJ/0AjoRu2AnQ+Xq2yKvNo29bQZNMF9QEX"
+    crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -39,14 +46,14 @@
             <div class="card">
               <div class="card-header">Task Mate : To-Do List</div>
               <div class="card-body">
-                <table class="table table-bordered mt-3">
+                <table class="table table-light table-bordered table-hover align-middle mt-3">
                   <thead>
                     <tr>
-                      <th>Task No</th>
-                      <th>Task Name</th>
-                      <th>Task Description</th>
-                      <th>Priority</th>
-                      <th>Action</th>
+                      <!-- <th class="table-info">Task No</th> -->
+                      <th class="table-primary text-center fs-6">Task Name</th>
+                      <th class="table-warning text-center fs-6">Task Description</th>
+                      <th class="table-danger text-center fs-6">Priority</th>
+                      <th class="table-success text-center fs-6">Action</th>
                     </tr>
                   </thead>
                   <tbody id="results">
@@ -71,21 +78,23 @@
               const results = JSON.parse(request.responseText);
               results.forEach(result => {
                 html += `
-          <tr>
-            <td>${result.id}</td>
-            <td contenteditable onblur="update_data(this, 'task_name', '${result.id}')">${result.task_name}</td>
-            <td contenteditable onblur="update_data(this, 'task_description', '${result.id}')">${result.task_description}</td>
-            <td contenteditable onblur="update_data(this, 'task_priority', '${result.id}')">${result.task_priority}</td>
-            <td><button type="button" class="btn btn-danger btn-sm" onclick="delete_data(${result.id})">Remove</button></td>
-          </tr>`;
+      <tr>
+       
+        <td contenteditable class="text-center" onblur="update_data(this, 'task_name', '${result.id}')"
+          data-toggle="tooltip"  data-placement="top" title="Click to edit">${result.task_name}</td>
+        <td contenteditable  class="text-center" onblur="update_data(this, 'task_description', '${result.id}')"
+          data-toggle="tooltip" data-placement="top" title="Click to edit">${result.task_description}</td>
+        <td contenteditable  class="text-center" onblur="update_data(this, 'task_priority', '${result.id}')"
+          data-toggle="tooltip" data-placement="top" title="Click to edit">${result.task_priority}</td>
+        <td class="d-grid gap-2"><button type="button" class="btn btn-danger btn-sm" onclick="delete_data(${result.id})">Remove</button></td>
+      </tr>`;
               });
               html += `
         <tr>
-          <td></td>
-          <td contenteditable id="task_name_data"></td>
-          <td contenteditable id="task_description_data"></td>
-          <td contenteditable id="task_priority_data"></td>
-          <td><button type="button" class="btn btn-success btn-sm" onclick="add_data()">Add</button></td>
+          <td contenteditable id="task_name_data" data-toggle="tooltip" data-placement="top" title="Enter task name"></td>
+          <td contenteditable id="task_description_data" data-toggle="tooltip" data-placement="top" title="Enter task description"></td>
+          <td contenteditable id="task_priority_data" data-toggle="tooltip" data-placement="top" title="Set task priority"></td>
+          <td class="d-grid gap-2"><button type="button" class="btn btn-success btn-sm" onclick="add_data()">Add</button></td>
         </tr>`;
               results_body.innerHTML = html;
             }
@@ -103,7 +112,7 @@
           request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
           request.onreadystatechange = () => {
             if (request.readyState === XMLHttpRequest.DONE && request.status === 200) {
-              alert('Data Added');
+              alert('Task added successfully. Keep up the good work!');
               load_data();
             }
           };
@@ -117,7 +126,7 @@
           request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
           request.onreadystatechange = () => {
             if (request.readyState === XMLHttpRequest.DONE && request.status === 200) {
-              alert('Data Updated');
+              alert('Your task has been updated successfully!');
             }
           };
           request.send(param);
@@ -131,7 +140,7 @@
             request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
             request.onreadystatechange = () => {
               if (request.readyState === XMLHttpRequest.DONE && request.status === 200) {
-                alert('Data Deleted');
+                alert('Task deleted successfully!');
                 load_data();
               }
             };
