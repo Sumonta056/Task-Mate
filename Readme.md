@@ -15,7 +15,7 @@
 - **Setting Up MySQL (Database) and Dotenv (Protecteion)**
 
 ```code
-     npm i express mysql dotenv hbs
+     npm i express mysql dotenv ejs
 ```
 
 - **Setting Up Nodemon (Auto Restart Server on changes)**

@@ -6,7 +6,7 @@
   <link rel="icon" href="/icon.png" type="image/x-icon" />
   <meta charset="UTF-8" />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/main.css" />
+
   <link href="https://getbootstrap.com/docs/5.1/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
@@ -16,6 +16,7 @@
   <script src="https://getbootstrap.com/docs/5.1/dist/js/bootstrap.min.js"
     integrity="sha384-4eS1FNSkTrB/fM9mzgPwpgqoqbpvfRMJ/0AjoRu2AnQ+Xq2yKvNo29bQZNMF9QEX"
     crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="/main.css" />
 </head>
 
 <body>
@@ -26,8 +27,19 @@
       </div>
       <ul class="nav-area">
         <li><a href="#">Home</a></li>
-        <li><a href="#">About</a></li>
-        <li><a href="#">Contact</a></li>
+
+        <% if (status==="loggedIn" ) { %>
+
+          <li><a href="/logout">Logout</a></li>
+          <li><a href="/register">Profile</a></li>
+
+          <% } else { %>
+
+            <li><a href="/login">Login</a></li>
+            <li> <a href="/register">Registration</a></li>
+
+
+            <% } %>
       </ul>
     </div>
     <% if (status==="loggedIn" ) { %>
@@ -40,45 +52,65 @@
               <%= user.name %>
             </span>! Boost Your Productivity with Task-Mate </span>
         </h2>
-        <a href="/logout">Logout</a>
-        <a href="/register">Profile</a>
-        <div class="container mt-5 mb-5">
-          <div class="mt-3 mb-3">
-            <div class="card">
-              <div class="card-header">Task Mate : To-Do List</div>
-              <div class="card-body">
-                <table class="table table-light table-bordered table-hover align-middle mt-3">
-                  <thead>
-                    <tr>
-                      <th class="table-secondary text-center fs-6">Checkbox</th>
-                      <th class="table-primary text-center fs-6">Task Name</th>
-                      <th class="table-warning text-center fs-6">Task Description</th>
-                      <th class="table-danger text-center fs-6">Priority</th>
-                      <th class="table-success text-center fs-6">Action</th>
-                    </tr>
-                  </thead>
-                  <tbody id="results">
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <script>
-        const results_body = document.querySelector('#results');
-        const userId = "<%= user.id %>";
-        load_data();
+        <div class="body">
+          <main class="table">
+            <section class="table__header">
+              <h1></h1>
+            </section>
+            <section class="table__body">
+              <table>
+                <thead>
+                  <tr>
+                    <th class="table-secondary1 text-center" style="padding: 20px;">Checkbox</th>
+                    <th class="table-secondary2 text-center" style="padding: 20px;">Task Name</th>
+                    <th class="table-secondary3 text-center" style="padding: 20px;">Task Description</th>
+                    <th class="table-secondary4 text-center" style="padding: 20px;">Priority</th>
+                    <th class="table-secondary5 text-center" style="padding: 20px;">Action</th>
+                  </tr>
+                </thead>
+                <tbody id="results" style="box-shadow: none;">
 
-        function load_data() {
-          const request = new XMLHttpRequest();
-          request.open('GET', `/get_data?userId=${userId}`);
-          let html = '';
-          request.onreadystatechange = () => {
-            if (request.readyState === XMLHttpRequest.DONE && request.status === 200) {
-              const results = JSON.parse(request.responseText);
-              results.forEach(result => {
-                html += `
+                </tbody>
+              </table>
+            </section>
+          </main>
+        </div>
+
+        <!-- <a href="/logout">Logout</a>
+        <a href="/register">Profile</a> -->
+        <!-- <div class="container mt-5 mb-5">
+          <div class="mt-3 mb-3">
+            <table class="table table-hover table-bordered border-dark align-middle mt-4"
+              style="background: transparent;">
+              <thead>
+                <tr>
+                  <th class="table-secondary text-center fs-6" style="padding: 20px;">Checkbox</th>
+                  <th class="table-primary text-center fs-6" style="padding: 20px;">Task Name</th>
+                  <th class="table-warning text-center fs-6" style="padding: 20px;">Task Description</th>
+                  <th class="table-danger text-center fs-6" style="padding: 20px;">Priority</th>
+                  <th class="table-success text-center fs-6" style="padding: 20px;">Action</th>
+                </tr>
+              </thead>
+              <tbody id="results" class="table-dark">
+              </tbody>
+            </table>
+          </div>
+        </div> -->
+
+        <script>
+          const results_body = document.querySelector('#results');
+          const userId = "<%= user.id %>";
+          load_data();
+
+          function load_data() {
+            const request = new XMLHttpRequest();
+            request.open('GET', `/get_data?userId=${userId}`);
+            let html = '';
+            request.onreadystatechange = () => {
+              if (request.readyState === XMLHttpRequest.DONE && request.status === 200) {
+                const results = JSON.parse(request.responseText);
+                results.forEach(result => {
+                  html += `
         <tr>
           <td class="text-center"><input type="checkbox" onchange="strikeThroughRow(this)"></td>
           <td contenteditable class="text-center" onblur="update_data(this, 'task_name', '${result.id}')"
@@ -89,8 +121,8 @@
             data-toggle="tooltip" data-placement="top" title="Click to edit">${result.task_priority}</td>
           <td class="d-grid gap-2"><button type="button" class="btn btn-danger btn-sm" onclick="delete_data(${result.id})">Remove</button></td>
         </tr>`;
-              });
-              html += `
+                });
+                html += `
       <tr>
         <td></td>
         <td contenteditable id="task_name_data" data-toggle="tooltip" data-placement="top" title="Enter task name"></td>
@@ -98,83 +130,83 @@
         <td contenteditable id="task_priority_data" data-toggle="tooltip" data-placement="top" title="Set task priority"></td>
         <td class="d-grid gap-2"><button type="button" class="btn btn-success btn-sm" onclick="add_data()">Add</button></td>
       </tr>`;
-              results_body.innerHTML = html;
-            }
-          };
-          request.send();
-        }
+                results_body.innerHTML = html;
+              }
+            };
+            request.send();
+          }
 
-        function add_data() {
-          const task_name = document.getElementById('task_name_data');
-          const task_description = document.getElementById('task_description_data');
-          const task_priority = document.getElementById('task_priority_data');
-          const userId = "<%= user.id %>"; // Get the user ID from the template
-          const param = `task_name=${task_name.innerText}&task_description=${task_description.innerText}&task_priority=${task_priority.innerText}&user_id=${userId}`; // Include user_id in the parameters
-          const request = new XMLHttpRequest();
-          request.open('POST', '/add_data', true);
-          request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-          request.onreadystatechange = () => {
-            if (request.readyState === XMLHttpRequest.DONE && request.status === 200) {
-              alert('Task added successfully. Keep up the good work!');
-              load_data();
-            }
-          };
-          request.send(param);
-        }
-
-        function update_data(element, variable_name, id) {
-          const param = `variable_name=${variable_name}&variable_value=${element.innerText}&id=${id}`;
-          const request = new XMLHttpRequest();
-          request.open('POST', '/update_data', true);
-          request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-          request.onreadystatechange = () => {
-            if (request.readyState === XMLHttpRequest.DONE && request.status === 200) {
-              alert('Your task has been updated successfully!');
-            }
-          };
-          request.send(param);
-        }
-
-        function delete_data(id) {
-          if (confirm('Are you sure you want to remove it?')) {
-            const param = `id=${id}`;
+          function add_data() {
+            const task_name = document.getElementById('task_name_data');
+            const task_description = document.getElementById('task_description_data');
+            const task_priority = document.getElementById('task_priority_data');
+            const userId = "<%= user.id %>"; // Get the user ID from the template
+            const param = `task_name=${task_name.innerText}&task_description=${task_description.innerText}&task_priority=${task_priority.innerText}&user_id=${userId}`; // Include user_id in the parameters
             const request = new XMLHttpRequest();
-            request.open('POST', '/delete_data', true);
+            request.open('POST', '/add_data', true);
             request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
             request.onreadystatechange = () => {
               if (request.readyState === XMLHttpRequest.DONE && request.status === 200) {
-                alert('Task deleted successfully!');
+                alert('Task added successfully. Keep up the good work!');
                 load_data();
               }
             };
             request.send(param);
           }
-        }
 
-        function strikeThroughRow(checkbox) {
-          const row = checkbox.parentNode.parentNode;
-          const buttons = row.getElementsByTagName('button');
-          for (let i = 0; i < buttons.length; i++) {
-            buttons[i].classList.toggle('strikethrough');
+          function update_data(element, variable_name, id) {
+            const param = `variable_name=${variable_name}&variable_value=${element.innerText}&id=${id}`;
+            const request = new XMLHttpRequest();
+            request.open('POST', '/update_data', true);
+            request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            request.onreadystatechange = () => {
+              if (request.readyState === XMLHttpRequest.DONE && request.status === 200) {
+                alert('Your task has been updated successfully!');
+              }
+            };
+            request.send(param);
           }
 
-          if (checkbox.checked) {
-            alert('Congratulations on completing the task!');
+          function delete_data(id) {
+            if (confirm('Are you sure you want to remove it?')) {
+              const param = `id=${id}`;
+              const request = new XMLHttpRequest();
+              request.open('POST', '/delete_data', true);
+              request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+              request.onreadystatechange = () => {
+                if (request.readyState === XMLHttpRequest.DONE && request.status === 200) {
+                  alert('Task deleted successfully!');
+                  load_data();
+                }
+              };
+              request.send(param);
+            }
           }
-        }
-      </script>
-      <% } else { %>
-        <div class="welcome-text gg">
-          <h1>
-            <span>Task-Mate</span>
-          </h1>
-          <h2>
-            <span>Stay organized and boost productivity with my intuitive To-Do List app.</span>
-          </h2>
-          <a href="/login">Login</a>
-          <a href="/register">Registration</a>
-        </div>
-        <% } %>
+
+          function strikeThroughRow(checkbox) {
+            const row = checkbox.parentNode.parentNode;
+            const buttons = row.getElementsByTagName('button');
+            for (let i = 0; i < buttons.length; i++) {
+              buttons[i].classList.toggle('strikethrough');
+            }
+
+            if (checkbox.checked) {
+              alert('Congratulations on completing the task!');
+            }
+          }
+        </script>
+        <% } else { %>
+          <div class="welcome-text gg">
+            <h1>
+              <span>Task-Mate</span>
+            </h1>
+            <h2>
+              <span>Stay organized and boost productivity with my intuitive To-Do List app.</span>
+            </h2>
+            <a href="/login">Login</a>
+            <a href="/register">Registration</a>
+          </div>
+          <% } %>
   </header>
 </body>
 
