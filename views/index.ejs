@@ -59,32 +59,34 @@
       </div>
       <script>
         const results_body = document.querySelector('#results');
+        const userId = "<%= user.id %>";
         load_data();
+
         function load_data() {
           const request = new XMLHttpRequest();
-          request.open('get', '/get_data');
+          request.open('GET', `/get_data?userId=${userId}`);
           let html = '';
           request.onreadystatechange = () => {
             if (request.readyState === XMLHttpRequest.DONE && request.status === 200) {
               const results = JSON.parse(request.responseText);
               results.forEach(result => {
                 html += `
-                    <tr>
-                        <td>${result.id}</td>
-                        <td contenteditable onblur="update_data(this, 'task_name', '${result.id}')">${result.task_name}</td>
-                        <td contenteditable onblur="update_data(this, 'task_description', '${result.id}')">${result.task_description}</td>
-                        <td contenteditable onblur="update_data(this, 'task_priority', '${result.id}')">${result.task_priority}</td>
-                        <td><button type="button" class="btn btn-danger btn-sm" onclick="delete_data(${result.id})">Remove</button></td>
-                    </tr>`;
+          <tr>
+            <td>${result.id}</td>
+            <td contenteditable onblur="update_data(this, 'task_name', '${result.id}')">${result.task_name}</td>
+            <td contenteditable onblur="update_data(this, 'task_description', '${result.id}')">${result.task_description}</td>
+            <td contenteditable onblur="update_data(this, 'task_priority', '${result.id}')">${result.task_priority}</td>
+            <td><button type="button" class="btn btn-danger btn-sm" onclick="delete_data(${result.id})">Remove</button></td>
+          </tr>`;
               });
               html += `
-                <tr>
-                    <td></td>
-                    <td contenteditable id="task_name_data"></td>
-                    <td contenteditable id="task_description_data"></td>
-                    <td contenteditable id="task_priority_data"></td>
-                    <td><button type="button" class="btn btn-success btn-sm" onclick="add_data()">Add</button></td>
-                </tr>`;
+        <tr>
+          <td></td>
+          <td contenteditable id="task_name_data"></td>
+          <td contenteditable id="task_description_data"></td>
+          <td contenteditable id="task_priority_data"></td>
+          <td><button type="button" class="btn btn-success btn-sm" onclick="add_data()">Add</button></td>
+        </tr>`;
               results_body.innerHTML = html;
             }
           };

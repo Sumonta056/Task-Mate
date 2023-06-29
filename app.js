@@ -29,10 +29,15 @@ app.use(bodyParser.json());
 
 // Create route handle for GET request to fetch data
 app.get("/get_data", (request, response) => {
-  const sql = "SELECT * FROM tasks ORDER BY id ASC";
+  const userId = request.query.userId;
+  const sql = `SELECT * FROM tasks WHERE user_id = ${userId} ORDER BY id ASC`;
   db.query(sql, (error, results) => {
-    console.log(error);
-    response.send(results);
+    if (error) {
+      console.log(error);
+      response.status(500).send("Error retrieving data");
+    } else {
+      response.send(results);
+    }
   });
 });
 
