@@ -17,6 +17,8 @@
     integrity="sha384-4eS1FNSkTrB/fM9mzgPwpgqoqbpvfRMJ/0AjoRu2AnQ+Xq2yKvNo29bQZNMF9QEX"
     crossorigin="anonymous"></script>
 
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.4.0/css/all.css">
+
   <link rel="stylesheet" href="/main.css" />
 </head>
 
@@ -65,7 +67,11 @@
                     <th class="table-secondary1 text-center" style="padding: 20px;">Checkbox</th>
                     <th class="table-secondary2 text-center" style="padding: 20px;">Task Name</th>
                     <th class="table-secondary3 text-center" style="padding: 20px;">Task Description</th>
-                    <th class="table-secondary4 text-center" style="padding: 20px;">Priority</th>
+                    <th class="table-secondary4 text-center" style="padding: 20px;">Priority
+                      <button type="button" class="sort" onclick="sortTaskPriority()"><i
+                          class="fa-solid fa-sort"></i></button>
+                    </th>
+                    </th>
                     <th class="table-secondary5 text-center" style="padding: 20px;">Action</th>
                   </tr>
                 </thead>
@@ -202,6 +208,33 @@
               alert('Congratulations on completing the task!');
             }
           }
+
+          function sortTaskPriority() {
+            const table = document.querySelector('#results');
+            const rows = Array.from(table.rows);
+
+            // Separate the last row from the rest of the rows
+            const lastRow = rows.pop();
+
+            // Sort the remaining rows based on task priority
+            rows.sort((a, b) => {
+              const priorityA = a.cells[3].innerText.toLowerCase();
+              const priorityB = b.cells[3].innerText.toLowerCase();
+              return priorityA.localeCompare(priorityB, 'en', { numeric: true });
+            });
+
+            // Clear the table body
+            table.innerHTML = '';
+
+            // Append the sorted rows back to the table
+            rows.forEach(row => {
+              table.appendChild(row);
+            });
+
+            // Append the last row back to the table
+            table.appendChild(lastRow);
+          }
+
         </script>
         <% } else { %>
           <div class="welcome-text gg">

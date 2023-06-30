@@ -397,3 +397,10 @@ tbody tr:hover {
   width: 100%;
 }
 
+.sort{
+
+  background-color: #00000000;
+
+  border-style: none;
+  padding-left: 5px;
+}
