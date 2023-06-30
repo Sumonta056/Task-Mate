@@ -1,4 +1,9 @@
 form.addEventListener("submit", () => {
+
+  const emailField = document.getElementById("emailss");
+  const emailField1 = document.getElementById("emailsss");
+  const passField = document.getElementById("passsss");
+
   const login = {
     email: email.value,
     password: password.value,
@@ -23,6 +28,11 @@ form.addEventListener("submit", () => {
         error.style.display = "none";
         home.style.display = "block";
         success.innerText = data.success;
+
+        // Hide email and password fields
+        emailField.style.display = "none";
+        emailField1.style.display = "none";
+        passField.style.display = "none";
       }
     });
 });

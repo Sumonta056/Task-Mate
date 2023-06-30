@@ -1,4 +1,9 @@
 form.addEventListener("submit", () => {
+
+  const Field1 = document.getElementById("hidee1");
+  const Field2 = document.getElementById("hidee2");
+  const Field3 = document.getElementById("hidee3");
+  const Field4 = document.getElementById("hidee4");
   const register = {
     name: names.value,
     email: email.value,
@@ -25,6 +30,10 @@ form.addEventListener("submit", () => {
         error.style.display = "none"
         home.style.display="block"
         success.innerText = data.success
+        Field1.style.display = "none";
+        Field2.style.display = "none";
+        Field3.style.display = "none";
+        Field4.style.display = "none";
       }
     });
 });
