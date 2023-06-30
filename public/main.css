@@ -354,4 +354,46 @@ tbody, td, tfoot, th, thead, tr {
 tbody tr:hover {
   background-color: rgba(43, 37, 37, 0.44) !important;
   color: #edf3f2;
+
 }
+
+.ggg{
+
+  
+  padding-top: 8px;
+  padding-bottom: 8px;
+  font-size: 15px;
+
+
+
+}
+
+.ggp {
+  width: 100%;
+  padding-left: 13px;
+  color: #333;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  font-size: 15px;
+  border-radius:10px ;
+  -webkit-border-radius:10px ;
+  -moz-border-radius:10px ;
+  -ms-border-radius:10px ;
+  -o-border-radius:10px ;
+  background-color: #eee9e9b4;
+
+
+ 
+}
+
+.gg input::hover{
+
+  transform: scale(1.5);
+
+}
+
+.ince{
+
+  width: 100%;
+}
+
