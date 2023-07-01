@@ -50,6 +50,7 @@ CREATE TABLE tasks (
   task_name VARCHAR(255) NOT NULL,
   task_description VARCHAR(255) NOT NULL,
   task_priority VARCHAR(20) NOT NULL,
+  checkbox_state BOOLEAN;
   user_id INT,
   FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );

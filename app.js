@@ -81,13 +81,14 @@ app.post("/update_data", (request, response) => {
   db.query(sql, values, (error, results) => {
     if (error) {
       console.error("Error updating data:", error);
-      response.status(500).json({ error: "An error occurred while updating the data" });
+      response
+        .status(500)
+        .json({ error: "An error occurred while updating the data" });
     } else {
       response.json({ message: "Your task has been updated successfully!" });
     }
   });
 });
-
 
 // Create route handle for POST request to delete data
 app.post("/delete_data", (request, response) => {
@@ -97,6 +98,23 @@ app.post("/delete_data", (request, response) => {
     response.json({
       message: "Task deleted successfully!",
     });
+  });
+});
+
+app.post("/update_checkbox_state", (request, response) => {
+  const checkbox_state = request.body.checkbox_state;
+  const id = request.body.id;
+
+  const sql = "UPDATE tasks SET checkbox_state = ? WHERE id = ?";
+  const values = [checkbox_state, id];
+
+  db.query(sql, values, (error, results) => {
+    if (error) {
+      console.error("Error updating checkbox state:", error);
+      response.status(500).json({ error: "An error occurred while updating the checkbox state" });
+    } else {
+      response.json({ message: "Checkbox state updated successfully!" });
+    }
   });
 });
 
