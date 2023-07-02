@@ -6,24 +6,20 @@
   <link rel="icon" href="/icon.png" type="image/x-icon" />
   <meta charset="UTF-8" />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;900&display=swap" rel="stylesheet" />
-
   <link href="https://getbootstrap.com/docs/5.1/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-
   <script src="https://unpkg.com/@popperjs/core@2.11.6/dist/umd/popper.min.js"
     integrity="sha384-TjQzSk8aVf4HWEdkKQ3rEj0ccfxSiSeB9qoVDtwL0TYR2jxHChnHtIv1Adzj+uKT"
     crossorigin="anonymous"></script>
   <script src="https://getbootstrap.com/docs/5.1/dist/js/bootstrap.min.js"
     integrity="sha384-4eS1FNSkTrB/fM9mzgPwpgqoqbpvfRMJ/0AjoRu2AnQ+Xq2yKvNo29bQZNMF9QEX"
     crossorigin="anonymous"></script>
-
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.4.0/css/all.css">
-
   <link rel="stylesheet" href="/main.css" />
 </head>
 
 <body>
-  <header>
+  <header class="header-container">
     <div class="wrapper">
       <div class="logo">
         <img src="/icon.png" alt="" />
@@ -34,7 +30,7 @@
         <% if (status==="loggedIn" ) { %>
 
           <li><a href="/logout">Logout</a></li>
-          <li><a href="/register">Profile</a></li>
+          <li><a href="/about">About</a></li>
 
           <% } else { %>
 
@@ -83,26 +79,6 @@
           </main>
         </div>
 
-        <!-- <a href="/logout">Logout</a>
-        <a href="/register">Profile</a> -->
-        <!-- <div class="container mt-5 mb-5">
-          <div class="mt-3 mb-3">
-            <table class="table table-hover table-bordered border-dark align-middle mt-4"
-              style="background: transparent;">
-              <thead>
-                <tr>
-                  <th class="table-secondary text-center fs-6" style="padding: 20px;">Checkbox</th>
-                  <th class="table-primary text-center fs-6" style="padding: 20px;">Task Name</th>
-                  <th class="table-warning text-center fs-6" style="padding: 20px;">Task Description</th>
-                  <th class="table-danger text-center fs-6" style="padding: 20px;">Priority</th>
-                  <th class="table-success text-center fs-6" style="padding: 20px;">Action</th>
-                </tr>
-              </thead>
-              <tbody id="results" class="table-dark">
-              </tbody>
-            </table>
-          </div>
-        </div> -->
 
         <script>
           const results_body = document.querySelector('#results');
@@ -197,18 +173,6 @@
             }
           }
 
-          function strikeThroughRow(checkbox) {
-            const row = checkbox.parentNode.parentNode;
-            const buttons = row.getElementsByTagName('button');
-            for (let i = 0; i < buttons.length; i++) {
-              buttons[i].classList.toggle('strikethrough');
-            }
-
-            if (checkbox.checked) {
-              alert('Congratulations on completing the task!');
-            }
-          }
-
           function updateCheckboxState(checkbox, id) {
             const state = checkbox.checked ? 1 : 0;
             const param = `checkbox_state=${state}&id=${id}`;
@@ -219,7 +183,6 @@
               if (request.readyState === XMLHttpRequest.DONE && request.status === 200) {
                 if (checkbox.checked) {
                   alert('Congratulations on completing the task!');
-                  
                 }
                 else {
                   alert('Seems You Want To Undo This Task');
@@ -232,25 +195,20 @@
           function sortTaskPriority() {
             const table = document.querySelector('#results');
             const rows = Array.from(table.rows);
-
             // Separate the last row from the rest of the rows
             const lastRow = rows.pop();
-
             // Sort the remaining rows based on task priority
             rows.sort((a, b) => {
               const priorityA = a.cells[3].innerText.toLowerCase();
               const priorityB = b.cells[3].innerText.toLowerCase();
               return priorityA.localeCompare(priorityB, 'en', { numeric: true });
             });
-
             // Clear the table body
             table.innerHTML = '';
-
             // Append the sorted rows back to the table
             rows.forEach(row => {
               table.appendChild(row);
             });
-
             // Append the last row back to the table
             table.appendChild(lastRow);
           }
@@ -269,6 +227,24 @@
           </div>
           <% } %>
   </header>
+
+  <script>
+    // Get the task table and header container elements
+    const taskTable = document.querySelector('.body');
+    const headerContainer = document.querySelector('.header-container');
+  
+    // Function to update the header background height
+    function updateHeaderBackgroundHeight() {
+      const tableHeight = taskTable.offsetHeight;
+      headerContainer.style.minHeight = `calc(${tableHeight}px + 500px)`; // Adjust the 100px value based on your needs
+    }
+  
+    // Call the function initially and on window resize
+    updateHeaderBackgroundHeight();
+    setInterval(updateHeaderBackgroundHeight, 1000); // Adjust the interval duration (in milliseconds) based on your needs
+  </script>
+  
+  
 </body>
 
 </html>
